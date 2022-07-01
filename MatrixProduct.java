@@ -1,3 +1,7 @@
+// Authors: Lucas Loughner (lloughne) and Spencer Gregory (sgrego03)
+// Date: 7/2/22
+// Assignment: Project2 Part2
+
 public class MatrixProduct {
 
     public static  int[][]  matrixProduct_DAC(int[][] A,  int[][] B)
@@ -35,13 +39,14 @@ public class MatrixProduct {
                     matProd_DAC_help(A, startrowA + (n / 2), startcolA + (n / 2), B, startrowB + (n / 2), startcolB, n / 2));
             int[][] C22 = addMat(matProd_DAC_help(A, startrowA + (n / 2), startcolA, B, startrowB, startcolB + (n / 2), n / 2),
                     matProd_DAC_help(A, startrowA + (n / 2), startcolA + (n / 2), B, startrowB + (n / 2), startcolB + (n / 2), n / 2));
-            //fillArr(C, C11, 0, 0);
             for(int i = 0; i < n/2; i++)
                 for(int j = 0; j < n/2; j++)
-                    C[i][j] = C11[i][j];
-            fillArr(C, C12, 0, n/2);
-            fillArr(C, C21, n/2, 0);
-            fillArr(C, C22, n/2, n/2);
+                {
+                    C[i][j] = C11[i][j]; // C11
+                    C[i][j+(n/2)] = C12[i][j]; // C12
+                    C[i+(n/2)][j] = C21[i][j]; // C21
+                    C[i+(n/2)][j+(n/2)] = C22[i][j]; // C22
+                }
         }
         return C;
     }

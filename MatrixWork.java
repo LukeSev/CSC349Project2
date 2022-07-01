@@ -72,8 +72,6 @@ public class MatrixWork {
             System.out.print("Matrices incompatible");
         }
 
-
-
     }
 
 
@@ -88,7 +86,7 @@ public class MatrixWork {
             throw new IllegalArgumentException("Matrices are incompatible");
         }
 
-        System.out.println("Product Matrix:");
+        //System.out.println("Product Matrix:");
         for(int i = 0; i < n; i++){
             for(int j = 0; j < m; j++){
                 for(int l = 0; l < k; l++){
