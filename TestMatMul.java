@@ -11,13 +11,14 @@ public class TestMatMul {
         // the other two will be used to compare outputs
 
         // Matrices
-        int A[][], B[][], C1[][], C2[][];
-        int size = 256; // Size must be a power of 2
+        int A[][], B[][], C1[][], C2[][], C3[][];
+        int size = 128; // Size must be a power of 2
         int numtests = 5; // Number of tests to be run
         A = new int[size][size];
         B = new int[size][size];
         C1 = new int[size][size];
         C2 = new int[size][size];
+        C3 = new int[size][size];
 
         for(int i = 0; i < numtests; i++)
         {
@@ -26,8 +27,8 @@ public class TestMatMul {
             {
                 for(int k = 0; k < size; k++)
                 {
-                    rand1 = (int)(Math.random() * size);
-                    rand2 = (int)(Math.random() * size);
+                    rand1 = (int)(Math.random() * size * size);
+                    rand2 = (int)(Math.random() * size * size);
                     A[j][k] = rand1;
                     B[j][k] = rand2;
                 }
@@ -36,32 +37,51 @@ public class TestMatMul {
             try
             {
                 C1 = MatrixProduct.matrixProduct_DAC(A, B);
-                C2 = MatrixWork.matrixProduct(A, B);
+                C2 = MatrixProduct.matrixProduct_Strassen(A, B);
+                C3 = MatrixWork.matrixProduct(A, B);
             }
             catch (Exception e)
             {
                 System.out.print(e.toString());
             }
 
-            // Un-comment the following to print out both product matrices for comparison
-            /*
-            System.out.printf("C1:%n");
-            printArray(C1, size);
-            System.out.printf("%nC2:%n");
-            printArray(C2, size);
-            */
 
-
+            // Testing DAC
             int errors = 0;
             for(int j = 0; j < size; j++)
             {
                 for(int k = 0; k < size; k++)
                 {
-                    if(C1[j][k] != C2[j][k])
+                    if(C1[j][k] != C3[j][k])
                         errors++;
                 }
             }
-            System.out.printf("Number of mismatching entries for test #%d: %d%n", i+1, errors);
+            System.out.printf("Number of mismatching entries for DAC test #%d: %d%n", i+1, errors);
+
+            // Testing Strassen
+            errors = 0;
+            for(int j = 0; j < size; j++)
+            {
+                for(int k = 0; k < size; k++)
+                {
+                    if(C2[j][k] != C3[j][k])
+                        errors++;
+                }
+            }
+            System.out.printf("Number of mismatching entries for Strassen test #%d: %d%n%n", i+1, errors);
+
+
+            // Un-comment the following to print out all product matrices for comparison
+/*
+            System.out.printf("C1:%n");
+            printArray(C1, size);
+            System.out.printf("%nC2:%n");
+            printArray(C2, size);
+            System.out.printf("%nC3:%n");
+            printArray(C3, size);
+            System.out.printf("%n%n%n");
+
+ */
         }
 
     }
